@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:reddit_clone/core/constants/constants.dart';
 import 'package:reddit_clone/theme/pallete.dart';
 
 class SignInButton extends StatelessWidget {
-  const SignInButton({super.key});
+  const SignInButton({super.key, required this.label, required this.iconPath});
+  final String label;
+  final String iconPath;
 
   @override
   Widget build(BuildContext context) {
@@ -12,12 +13,12 @@ class SignInButton extends StatelessWidget {
       child: ElevatedButton.icon(
         onPressed: () {},
         icon: Image.asset(
-          Constants.googleIconImgPath,
+          iconPath,
           width: 34,
         ),
-        label: const Text(
-          'Continue with Google',
-          style: TextStyle(fontSize: 18),
+        label: Text(
+          label,
+          style: const TextStyle(fontSize: 18),
         ),
         style: ElevatedButton.styleFrom(
           backgroundColor: Pallete.greyColor,

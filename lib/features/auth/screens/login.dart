@@ -45,7 +45,10 @@ class LoginScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          const SignInButton()
+          const SignInButton(
+            label: 'Continue with Google',
+            iconPath: Constants.googleIconImgPath,
+          )
         ],
       ),
     );
