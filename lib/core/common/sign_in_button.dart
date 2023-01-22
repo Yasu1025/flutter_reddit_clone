@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:reddit_clone/features/auth/controller/auth_controller.dart';
 import 'package:reddit_clone/theme/pallete.dart';
 
-class SignInButton extends StatelessWidget {
-  const SignInButton(
-      {super.key,
-      required this.label,
-      required this.iconPath,
-      required this.onTapFnc});
+class SignInButton extends ConsumerWidget {
+  const SignInButton({super.key, required this.label, required this.iconPath});
   final String label;
   final String iconPath;
-  final Function onTapFnc;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.all(14.0),
       child: ElevatedButton.icon(
-        onPressed: () {
-          onTapFnc();
+        onPressed: () => {
+          ref.read(authControllerProvider).signInWithGoogle(context),
         },
         icon: Image.asset(
           iconPath,
