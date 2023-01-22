@@ -9,7 +9,8 @@ class UserModel {
   final String banner;
   final bool isAuthenticated;
   final int karma;
-  final List<String> awards;
+  final List<dynamic>
+      awards; // TODO: actually List<String> but cause error when fetching data from firestore
   UserModel({
     required this.uid,
     required this.name,
@@ -60,7 +61,7 @@ class UserModel {
       banner: map['banner'] as String,
       isAuthenticated: map['isAuthenticated'] as bool,
       karma: map['karma'] as int,
-      awards: List<String>.from((map['awards'] as List<String>)),
+      awards: List<dynamic>.from((map['awards'] as List<dynamic>)),
     );
   }
 
