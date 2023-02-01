@@ -36,6 +36,10 @@ class Pallete {
       iconTheme: IconThemeData(
         color: blackColor,
       ),
+      titleTextStyle: TextStyle(
+        color: blackColor,
+        fontSize: 20,
+      ),
     ),
     drawerTheme: const DrawerThemeData(
       backgroundColor: whiteColor,
