@@ -10,10 +10,21 @@ import 'package:routemaster/routemaster.dart';
 final communityControllerProvider =
     StateNotifierProvider<CommunityController, bool>(
   (ref) => CommunityController(
-    ref.watch(CommunityRepositoryProvider),
+    ref.watch(communityRepositoryProvider),
     ref,
   ),
 );
+
+final getCommunityByNameProvider = StreamProvider.family((ref, String name) {
+  return ref
+      .watch(communityControllerProvider.notifier)
+      .getCommunityByName(name);
+});
+
+final userCommunitiesProvider = StreamProvider((ref) {
+  final communityController = ref.watch(communityControllerProvider.notifier);
+  return communityController.getCommunitis();
+});
 
 class CommunityController extends StateNotifier<bool> {
   final CommunityRepository _communityRepository;
@@ -46,5 +57,14 @@ class CommunityController extends StateNotifier<bool> {
       );
       Routemaster.of(ctx).pop();
     });
+  }
+
+  Stream<List<Community>> getCommunitis() {
+    final uid = _ref.read(userProvider)!.uid;
+    return _communityRepository.getCommunities(uid);
+  }
+
+  Stream<Community> getCommunityByName(String name) {
+    return _communityRepository.getCommunityByName(name);
   }
 }

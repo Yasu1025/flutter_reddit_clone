@@ -1,6 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 
 class Community {
@@ -8,8 +5,8 @@ class Community {
   final String name;
   final String banner;
   final String avatar;
-  final List<String> members;
-  final List<String> mods;
+  final List<dynamic> members;
+  final List<dynamic> mods;
   Community({
     required this.id,
     required this.name,
@@ -24,8 +21,8 @@ class Community {
     String? name,
     String? banner,
     String? avatar,
-    List<String>? members,
-    List<String>? mods,
+    List<dynamic>? members,
+    List<dynamic>? mods,
   }) {
     return Community(
       id: id ?? this.id,
@@ -54,8 +51,8 @@ class Community {
       name: map['name'] as String,
       banner: map['banner'] as String,
       avatar: map['avatar'] as String,
-      members: List<String>.from((map['members'] as List<String>)),
-      mods: List<String>.from((map['mods'] as List<String>)),
+      members: List<dynamic>.from((map['members'] as List<dynamic>)),
+      mods: List<dynamic>.from((map['mods'] as List<dynamic>)),
     );
   }
 
