@@ -18,7 +18,6 @@ class CommunityScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider)!;
     return Scaffold(
-      appBar: AppBar(),
       body: ref.watch(getCommunityByNameProvider(communityID)).when(
           data: (community) => NestedScrollView(
               headerSliverBuilder: (context, innerBoxIsScrolled) {
