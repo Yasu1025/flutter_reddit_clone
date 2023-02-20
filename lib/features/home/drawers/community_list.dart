@@ -12,8 +12,8 @@ class CommunityList extends ConsumerWidget {
     Routemaster.of(context).push('/create_community');
   }
 
-  void navigateToCommunity(BuildContext context, String name) {
-    Routemaster.of(context).push('/community/$name');
+  void navigateToCommunity(BuildContext context, String id) {
+    Routemaster.of(context).push('/community/$id');
   }
 
   @override
@@ -39,8 +39,7 @@ class CommunityList extends ConsumerWidget {
                               ),
                               title: Text(community.name),
                               onTap: () => {
-                                    navigateToCommunity(
-                                        context, community.name),
+                                    navigateToCommunity(context, community.id),
                                   });
                         },
                       ),
