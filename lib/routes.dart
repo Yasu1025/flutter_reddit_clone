@@ -9,6 +9,7 @@ import 'package:reddit_clone/features/community/screens/create_community_screen.
 import 'package:reddit_clone/features/community/screens/edit_community_screen.dart';
 import 'package:reddit_clone/features/community/screens/mod_tools_screen.dart';
 import 'package:reddit_clone/features/home/screens/home_screen.dart';
+import 'package:reddit_clone/features/user_profile/screens/user_profile_screen.dart';
 import 'package:routemaster/routemaster.dart';
 
 final loggedOutRoute = RouteMap(routes: {
@@ -20,18 +21,28 @@ final loggedInRoute = RouteMap(routes: {
   '/create_community': (_) =>
       const MaterialPage(child: CreateCommunityScreen()),
   '/community/:name': (route) => MaterialPage(
-        child: CommunityScreen(communityID: route.pathParameters['name']!),
+        child: CommunityScreen(
+          communityID: route.pathParameters['name']!,
+        ),
       ),
   '/mod-tools/:id': (route) => MaterialPage(
-          child: ModToolsScreen(
-        communityID: route.pathParameters['id']!,
-      )),
+        child: ModToolsScreen(
+          communityID: route.pathParameters['id']!,
+        ),
+      ),
   '/edit-community/:id': (route) => MaterialPage(
-          child: EditCommunityScreen(
-        communityID: route.pathParameters['id']!,
-      )),
+        child: EditCommunityScreen(
+          communityID: route.pathParameters['id']!,
+        ),
+      ),
   '/add-mods/:id': (route) => MaterialPage(
-          child: AddModsScreen(
-        communityID: route.pathParameters['id']!,
-      )),
+        child: AddModsScreen(
+          communityID: route.pathParameters['id']!,
+        ),
+      ),
+  '/user/:uid': (route) => MaterialPage(
+        child: UserProfileScreen(
+          uid: route.pathParameters['uid']!,
+        ),
+      ),
 });
