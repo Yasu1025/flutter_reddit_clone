@@ -9,6 +9,7 @@ import 'package:reddit_clone/core/constants/constants.dart';
 import 'package:reddit_clone/core/utils.dart';
 import 'package:reddit_clone/features/auth/controller/auth_controller.dart';
 import 'package:reddit_clone/features/user_profile/controller/user_profile_controller.dart';
+import 'package:reddit_clone/theme/pallete.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
   final String uid;
@@ -70,8 +71,11 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final isLoading = ref.watch(userProfileControllerProvider);
+    final currentTheme = ref.watch(themeNotifierProvider);
+
     return ref.watch(getUserProvider(widget.uid)).when(
         data: (user) => Scaffold(
+              backgroundColor: currentTheme.backgroundColor,
               appBar: AppBar(
                 title: const Text('Edit Community'),
                 centerTitle: false,
@@ -99,6 +103,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                     radius: const Radius.circular(10),
                                     dashPattern: const [10, 4],
                                     strokeCap: StrokeCap.round,
+                                    color: currentTheme
+                                        .textTheme.bodyText2!.color!,
                                     child: Container(
                                       width: double.infinity,
                                       height: 150,
