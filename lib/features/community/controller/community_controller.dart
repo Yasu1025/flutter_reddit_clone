@@ -6,7 +6,6 @@ import 'package:fpdart/fpdart.dart';
 import 'package:reddit_clone/core/constants/constants.dart';
 import 'package:reddit_clone/core/failuer.dart';
 import 'package:reddit_clone/core/providers/storage_repository_provider.dart';
-import 'package:reddit_clone/core/type_defs.dart';
 import 'package:reddit_clone/core/utils.dart';
 import 'package:reddit_clone/features/auth/controller/auth_controller.dart';
 import 'package:reddit_clone/features/community/repository/community_repository.dart';
@@ -52,27 +51,27 @@ class CommunityController extends StateNotifier<bool> {
     state = true;
     final uid = _ref.read(userProvider)?.uid ?? '';
     Community community = Community(
-        id: name,
-        name: name,
-        banner: Constants.bannerDefault,
-        avatar: Constants.avatarDefault,
-        members: [uid],
-        mods: [uid]);
+      id: name,
+      name: name,
+      banner: Constants.bannerDefault,
+      avatar: Constants.avatarDefault,
+      members: [uid],
+      mods: [uid],
+    );
 
     final res = await _communityRepository.createCommunity(community);
     state = false;
 
     res.fold(
-        (l) => showSnackBar(
-              ctx,
-              l.message,
-            ), (r) {
-      showSnackBar(
-        ctx,
-        'Community created successfuly',
-      );
-      Routemaster.of(ctx).pop();
-    });
+      (l) => showSnackBar(ctx, l.message),
+      (r) {
+        showSnackBar(
+          ctx,
+          'Community created successfuly',
+        );
+        Routemaster.of(ctx).pop();
+      },
+    );
   }
 
   void editCommunity({
