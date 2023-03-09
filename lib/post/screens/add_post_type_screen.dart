@@ -48,6 +48,10 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
     }
   }
 
+  void sharePost() {
+    // todo call controller
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentTheme = ref.watch(themeNotifierProvider);
