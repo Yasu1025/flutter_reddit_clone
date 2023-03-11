@@ -19,12 +19,17 @@ final postControllerProvider = StateNotifierProvider<PostController, bool>(
   ),
 );
 
+final userPostsProvider =
+    StreamProvider.family((ref, List<Community> communities) {
+  return ref.watch(postControllerProvider.notifier).fetchUserPosts(communities);
+});
+
 class PostController extends StateNotifier<bool> {
-  final PostRepository _addPostRepository;
+  final PostRepository _postRepository;
   final StorageRepository _storageRepository;
   final Ref _ref;
 
-  PostController(this._addPostRepository, this._storageRepository, this._ref)
+  PostController(this._postRepository, this._storageRepository, this._ref)
       : super(false);
 
   void shareTextPost({
@@ -52,7 +57,7 @@ class PostController extends StateNotifier<bool> {
       description: description,
     );
 
-    final res = await _addPostRepository.addPost(createdPost);
+    final res = await _postRepository.addPost(createdPost);
     state = false;
     res.fold(
       (l) => showSnackBar(ctx, l.message),
@@ -91,7 +96,7 @@ class PostController extends StateNotifier<bool> {
       link: link,
     );
 
-    final res = await _addPostRepository.addPost(createdPost);
+    final res = await _postRepository.addPost(createdPost);
     state = false;
     res.fold(
       (l) => showSnackBar(ctx, l.message),
@@ -135,7 +140,7 @@ class PostController extends StateNotifier<bool> {
             awards: [],
             link: r);
 
-        final res = await _addPostRepository.addPost(createdPost);
+        final res = await _postRepository.addPost(createdPost);
         state = false;
         res.fold(
           (l) => showSnackBar(ctx, l.message),
@@ -149,5 +154,10 @@ class PostController extends StateNotifier<bool> {
         );
       },
     );
+  }
+
+  Stream<List<Post>> fetchUserPosts(List<Community> communities) {
+    if (communities.isEmpty) Stream.value([]);
+    return _postRepository.fetchUserPosts(communities);
   }
 }
