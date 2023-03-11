@@ -11,7 +11,7 @@ import 'package:reddit_clone/post/repository/add_post_repository.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:uuid/uuid.dart';
 
-final addPostControllerProvider = StateNotifierProvider<PostController, bool>(
+final postControllerProvider = StateNotifierProvider<PostController, bool>(
   (ref) => PostController(
     ref.watch(postRepositoryProvider),
     ref.watch(storageRepositoryProvider),
@@ -85,7 +85,7 @@ class PostController extends StateNotifier<bool> {
       commentCount: 0,
       username: user.name,
       uid: user.uid,
-      type: 'text',
+      type: 'link',
       createdAt: DateTime.now(),
       awards: [],
       link: link,
@@ -130,7 +130,7 @@ class PostController extends StateNotifier<bool> {
             commentCount: 0,
             username: user.name,
             uid: user.uid,
-            type: 'text',
+            type: 'image',
             createdAt: DateTime.now(),
             awards: [],
             link: r);
