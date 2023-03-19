@@ -4,11 +4,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reddit_clone/core/constants/constants.dart';
 import 'package:reddit_clone/features/auth/controller/auth_controller.dart';
 import 'package:reddit_clone/models/post_model.dart';
+import 'package:reddit_clone/post/controller/post_controller.dart';
 import 'package:reddit_clone/theme/pallete.dart';
 
 class PostCard extends ConsumerWidget {
   final Post post;
   const PostCard({super.key, required this.post});
+
+  void onDeletePost(BuildContext ctx, WidgetRef ref) {
+    ref.read(postControllerProvider.notifier).deletePost(ctx, post);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -74,7 +79,7 @@ class PostCard extends ConsumerWidget {
                               ),
                               if (post.uid == user.uid)
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () => onDeletePost(context, ref),
                                   icon: Icon(
                                     Icons.delete,
                                     color: Pallete.redColor,
@@ -93,18 +98,20 @@ class PostCard extends ConsumerWidget {
                             ),
                           ),
                           if (isTypeImage)
-                            SizedBox(
-                              width: double.infinity,
-                              height: MediaQuery.of(context).size.height * 0.35,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 18,
+                              ),
                               child: Image.network(
                                 post.link!,
                                 fit: BoxFit.cover,
                               ),
                             ),
                           if (isTypeLink)
-                            SizedBox(
-                              width: double.infinity,
-                              height: MediaQuery.of(context).size.height * 0.35,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 18,
+                              ),
                               child: AnyLinkPreview(
                                 displayDirection:
                                     UIDirection.uiDirectionHorizontal,
