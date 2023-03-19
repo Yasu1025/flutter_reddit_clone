@@ -15,6 +15,14 @@ class PostCard extends ConsumerWidget {
     ref.read(postControllerProvider.notifier).deletePost(ctx, post);
   }
 
+  void onUpvote(WidgetRef ref) {
+    ref.read(postControllerProvider.notifier).upvote(post);
+  }
+
+  void onDownvote(WidgetRef ref) {
+    ref.read(postControllerProvider.notifier).downvote(post);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentTheme = ref.watch(themeNotifierProvider);
@@ -135,11 +143,11 @@ class PostCard extends ConsumerWidget {
                               Row(
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () => onUpvote(ref),
                                     icon: Icon(
                                       Constants.up,
                                       size: 30,
-                                      color: post.awards.contains(user.uid)
+                                      color: post.upvotes.contains(user.uid)
                                           ? Pallete.redColor
                                           : null,
                                     ),
@@ -149,11 +157,11 @@ class PostCard extends ConsumerWidget {
                                     style: const TextStyle(fontSize: 17),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () => onDownvote(ref),
                                     icon: Icon(
                                       Constants.down,
                                       size: 30,
-                                      color: post.awards.contains(user.uid)
+                                      color: post.downvotes.contains(user.uid)
                                           ? Pallete.blueColor
                                           : null,
                                     ),

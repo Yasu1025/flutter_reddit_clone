@@ -173,4 +173,14 @@ class PostController extends StateNotifier<bool> {
       },
     );
   }
+
+  void upvote(Post post) {
+    final userID = _ref.read(userProvider)!.uid;
+    _postRepository.upvote(post, userID);
+  }
+
+  void downvote(Post post) {
+    final userID = _ref.read(userProvider)!.uid;
+    _postRepository.downvote(post, userID);
+  }
 }
