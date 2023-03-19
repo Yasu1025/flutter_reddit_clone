@@ -5,8 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reddit_clone/core/providers/storage_repository_provider.dart';
 import 'package:reddit_clone/core/utils.dart';
 import 'package:reddit_clone/features/auth/controller/auth_controller.dart';
+import 'package:reddit_clone/models/comment_model.dart';
 import 'package:reddit_clone/models/community_model.dart';
 import 'package:reddit_clone/models/post_model.dart';
+import 'package:reddit_clone/models/user_model.dart';
 import 'package:reddit_clone/post/repository/post_repository.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:uuid/uuid.dart';
@@ -23,6 +25,16 @@ final userPostsProvider =
     StreamProvider.family((ref, List<Community> communities) {
   return ref.watch(postControllerProvider.notifier).fetchUserPosts(communities);
 });
+
+final getPostByIdProvider = StreamProvider.family(
+  (ref, String postId) =>
+      ref.watch(postControllerProvider.notifier).getPostById(postId),
+);
+
+final getPostCommentsProvider = StreamProvider.family(
+  (ref, String postId) =>
+      ref.watch(postControllerProvider.notifier).fetchCommentsOfPost(postId),
+);
 
 class PostController extends StateNotifier<bool> {
   final PostRepository _postRepository;
@@ -182,5 +194,43 @@ class PostController extends StateNotifier<bool> {
   void downvote(Post post) {
     final userID = _ref.read(userProvider)!.uid;
     _postRepository.downvote(post, userID);
+  }
+
+  Stream<Post> getPostById(String postId) {
+    return _postRepository.getPostById(postId);
+  }
+
+// Comments from here
+  void addComment({
+    required BuildContext ctx,
+    required String commentText,
+    required Post post,
+  }) async {
+    UserModel user = _ref.read(userProvider)!;
+    String commentId = const Uuid().v1();
+
+    Comment comment = Comment(
+        id: commentId,
+        text: commentText,
+        createdAt: DateTime.now(),
+        postId: post.id,
+        userId: user.uid,
+        username: user.name,
+        profileImg: user.profileImg);
+
+    final res = await _postRepository.addComment(comment);
+    res.fold(
+      (l) => showSnackBar(ctx, l.message),
+      (r) {
+        showSnackBar(
+          ctx,
+          'Comment posted successfuly',
+        );
+      },
+    );
+  }
+
+  Stream<List<Comment>> fetchCommentsOfPost(String postId) {
+    return _postRepository.fetchCommentsOfPost(postId);
   }
 }
