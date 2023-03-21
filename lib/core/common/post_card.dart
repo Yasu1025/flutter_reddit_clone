@@ -27,6 +27,12 @@ class PostCard extends ConsumerWidget {
     ref.read(postControllerProvider.notifier).downvote(post);
   }
 
+  void onPostAward(BuildContext ctx, WidgetRef ref, String award) {
+    ref
+        .read(postControllerProvider.notifier)
+        .awardPost(post: post, award: award, ctx: ctx);
+  }
+
   void navigateToUser(BuildContext ctx) {
     Routemaster.of(ctx).push('/user/${post.uid}');
   }
@@ -117,6 +123,21 @@ class PostCard extends ConsumerWidget {
                                 ),
                             ],
                           ),
+                          if (post.awards.isNotEmpty) ...[
+                            const SizedBox(height: 5),
+                            SizedBox(
+                              height: 25,
+                              child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: post.awards.length,
+                                  itemBuilder: (context, index) {
+                                    return Image.asset(
+                                      Constants.awards[post.awards[index]]!,
+                                      height: 23,
+                                    );
+                                  }),
+                            ),
+                          ],
                           Padding(
                             padding: const EdgeInsets.only(top: 10.0),
                             child: Text(
@@ -207,25 +228,66 @@ class PostCard extends ConsumerWidget {
                                 ],
                               ),
                               ref
-                                  .watch(getCommunityByNameProvider(
-                                      post.communityName))
+                                  .watch(
+                                    getCommunityByNameProvider(
+                                        post.communityName),
+                                  )
                                   .when(
-                                      data: (community) {
-                                        if (community.mods.contains(user.uid)) {
-                                          return IconButton(
-                                            onPressed: () =>
-                                                onDeletePost(context, ref),
-                                            icon: const Icon(
-                                              Icons.admin_panel_settings,
-                                            ),
-                                          );
-                                        }
+                                    data: (community) {
+                                      if (community.mods.contains(user.uid)) {
+                                        return IconButton(
+                                          onPressed: () =>
+                                              onDeletePost(context, ref),
+                                          icon: const Icon(
+                                            Icons.admin_panel_settings,
+                                          ),
+                                        );
+                                      }
+                                      ;
 
-                                        return const SizedBox();
-                                      },
-                                      error: (error, stackTrace) =>
-                                          ErrorText(error: error.toString()),
-                                      loading: () => const Loader())
+                                      return const SizedBox();
+                                    },
+                                    error: (error, stackTrace) => ErrorText(
+                                      error: error.toString(),
+                                    ),
+                                    loading: () => const Loader(),
+                                  ),
+                              IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => Dialog(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(20),
+                                        child: GridView.builder(
+                                          shrinkWrap: true,
+                                          gridDelegate:
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 4,
+                                          ),
+                                          itemCount: user.awards.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            final award = user.awards[index];
+
+                                            return GestureDetector(
+                                              onTap: () => onPostAward(
+                                                  context, ref, award),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Image.asset(
+                                                    Constants.awards[award]!),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(Icons.card_giftcard_outlined),
+                              )
                             ],
                           )
                         ],
