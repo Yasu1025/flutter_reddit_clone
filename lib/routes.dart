@@ -11,8 +11,8 @@ import 'package:reddit_clone/features/community/screens/mod_tools_screen.dart';
 import 'package:reddit_clone/features/home/screens/home_screen.dart';
 import 'package:reddit_clone/features/user_profile/screens/edit_profile_screen.dart';
 import 'package:reddit_clone/features/user_profile/screens/user_profile_screen.dart';
-import 'package:reddit_clone/post/screens/add_post_type_screen.dart';
-import 'package:reddit_clone/post/screens/comments_screen.dart';
+import 'package:reddit_clone/features/post/screens/add_post_type_screen.dart';
+import 'package:reddit_clone/features/post/screens/comments_screen.dart';
 import 'package:routemaster/routemaster.dart';
 
 final loggedOutRoute = RouteMap(routes: {

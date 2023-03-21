@@ -8,7 +8,7 @@ import 'package:reddit_clone/core/common/loader.dart';
 import 'package:reddit_clone/core/utils.dart';
 import 'package:reddit_clone/features/community/controller/community_controller.dart';
 import 'package:reddit_clone/models/community_model.dart';
-import 'package:reddit_clone/post/controller/post_controller.dart';
+import 'package:reddit_clone/features/post/controller/post_controller.dart';
 import 'package:reddit_clone/theme/pallete.dart';
 
 class AddPostTypeScreen extends ConsumerStatefulWidget {

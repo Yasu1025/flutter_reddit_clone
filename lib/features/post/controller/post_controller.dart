@@ -11,7 +11,7 @@ import 'package:reddit_clone/models/comment_model.dart';
 import 'package:reddit_clone/models/community_model.dart';
 import 'package:reddit_clone/models/post_model.dart';
 import 'package:reddit_clone/models/user_model.dart';
-import 'package:reddit_clone/post/repository/post_repository.dart';
+import 'package:reddit_clone/features/post/repository/post_repository.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:uuid/uuid.dart';
 
